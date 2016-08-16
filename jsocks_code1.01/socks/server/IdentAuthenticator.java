@@ -49,7 +49,7 @@ public class IdentAuthenticator extends ServerAuthenticatorNone{
    /**
     Adds range of addresses from which connection is allowed. Hashtable
     users should contain user names as keys and anything as values
-    (value is not used and will be ignored). 
+    (value is not used and will be ignored).
     @param hostRange Range of ip addresses from which connection is allowed.
     @param users Hashtable of users for whom connection is allowed, or null
     to indicate that anybody is allowed to connect from the hosts within given
@@ -82,9 +82,9 @@ public class IdentAuthenticator extends ServerAuthenticatorNone{
      //System.out.println("super.startSession() returned:"+auth);
      if(auth == null) return null;
 
-     //do the authentication 
+     //do the authentication
 
-     Hashtable user_names = (Hashtable) users.elementAt(ind); 
+     Hashtable user_names = (Hashtable) users.elementAt(ind);
 
      if(user_names != null){ //If need to do authentication
        Ident ident;
@@ -105,7 +105,7 @@ public class IdentAuthenticator extends ServerAuthenticatorNone{
    */
    public boolean checkRequest(ProxyMessage msg,java.net.Socket s){
      //If it's version 5 request, or if anybody is permitted, return true;
-     if(msg.version == 5 || user == null) 
+     if(msg.version == 5 || user == null)
        return true;
 
      if(msg.version != 4) return false; //Who knows?
@@ -126,9 +126,9 @@ public class IdentAuthenticator extends ServerAuthenticatorNone{
 //////////////////
   private int getRangeIndex(InetAddress ip){
      int index = 0;
-     Enumeration enum = hosts.elements();
-     while(enum.hasMoreElements()){
-       InetRange ir = (InetRange) enum.nextElement();
+     Enumeration enumeration = hosts.elements();
+     while(enumeration.hasMoreElements()){
+       InetRange ir = (InetRange) enumeration.nextElement();
        if(ir.contains(ip)) return index;
        index++;
      }
@@ -138,11 +138,11 @@ public class IdentAuthenticator extends ServerAuthenticatorNone{
   private String userNames(int i){
     if(users.elementAt(i) == null) return "Everybody is permitted.";
 
-    Enumeration enum = ((Hashtable)users.elementAt(i)).keys();
-    if(!enum.hasMoreElements()) return "";
-    String s = enum.nextElement().toString();
-    while(enum.hasMoreElements())
-       s += "; "+enum.nextElement();
+    Enumeration enumeration = ((Hashtable)users.elementAt(i)).keys();
+    if(!enumeration.hasMoreElements()) return "";
+    String s = enumeration.nextElement().toString();
+    while(enumeration.hasMoreElements())
+       s += "; "+enumeration.nextElement();
 
     return s;
   }

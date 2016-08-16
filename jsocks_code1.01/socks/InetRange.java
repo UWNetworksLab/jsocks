@@ -11,7 +11,7 @@ import java.util.*;
  * InetRange provides several methods to add either standalone addresses, or
  * ranges (e.g. 100.200.300.0:100.200.300.255, which covers all addresses
  * on on someones local network). It also provides methods for checking wether
- * given address is in this range. Any number of ranges and standalone 
+ * given address is in this range. Any number of ranges and standalone
  * addresses can be added to the range.
  */
 public class InetRange implements Cloneable{
@@ -36,19 +36,19 @@ public class InetRange implements Cloneable{
         The String can be one of those:
         <UL>
         <li> Host name. eg.(Athena.myhost.com or 45.54.56.65)
-        
+
         <li> Range in the form .myhost.net.au <BR>
              In which case anything that ends with .myhost.net.au will
              be considered in the range.
 
         <li> Range in the form ddd.ddd.ddd. <BR>
              This will be treated as range ddd.ddd.ddd.0 to ddd.ddd.ddd.255.
-             It is not necessary to specify 3 first bytes you can use just 
+             It is not necessary to specify 3 first bytes you can use just
              one or two. For example 130. will cover address between 130.0.0.0
              and 13.255.255.255.
 
         <li> Range in the form host_from[: \t\n\r\f]host_to. <br>
-             That is two hostnames or ips separated by either whitespace 
+             That is two hostnames or ips separated by either whitespace
              or colon.
         </UL>
      */
@@ -61,7 +61,7 @@ public class InetRange implements Cloneable{
       Object[] entry;
 
       if(s.charAt(s.length()-1) == '.'){
-         //thing like: 111.222.33. 
+         //thing like: 111.222.33.
          //it is being treated as range 111.222.33.000 - 111.222.33.255
 
          int[] addr = ip2intarray(s);
@@ -153,7 +153,7 @@ public class InetRange implements Cloneable{
      *      all previous attempts failed, try to resolve the hostname, and
      *      check wether the ip associated with the host is in the range.It
      *      also repeats all previos steps with the hostname obtained from
-     *      InetAddress, but the name is not allways the full name,it is 
+     *      InetAddress, but the name is not allways the full name,it is
      *      quite likely to be the same. Well it was on my machine.
      *  </ol>
        @param host Host name to check.
@@ -219,9 +219,9 @@ public class InetRange implements Cloneable{
       @return true if successfull.
      */
     public synchronized boolean remove(String s){
-      Enumeration enum = all.elements();
-      while(enum.hasMoreElements()){
-        Object[] entry = (Object[]) enum.nextElement();
+      Enumeration enumeration = all.elements();
+      while(enumeration.hasMoreElements()){
+        Object[] entry = (Object[]) enumeration.nextElement();
         if(s.equals(entry[0])){
           all.removeElement(entry);
           end_names.removeElement(s);
@@ -260,12 +260,12 @@ public class InetRange implements Cloneable{
      * unnecessary convertion of IPs, when checking subranges
      */
     private synchronized boolean contains(long ip){
-       Enumeration enum = all.elements();
-       while(enum.hasMoreElements()){
-         Object[] obj = (Object[]) enum.nextElement();
+       Enumeration enumeration = all.elements();
+       while(enumeration.hasMoreElements()){
+         Object[] obj = (Object[]) enumeration.nextElement();
          Long from = obj[2]==null?null:(Long)obj[2];
          Long to   = obj[3]==null?null:(Long)obj[3];
-         if(from != null && from.longValue()<= ip 
+         if(from != null && from.longValue()<= ip
                          && to.longValue() >= ip) return true;
 
        }
@@ -276,9 +276,9 @@ public class InetRange implements Cloneable{
        return host_names.containsKey(host);
     }
     private boolean checkHostEnding(String host){
-       Enumeration enum = end_names.elements();
-       while(enum.hasMoreElements()){
-          if(host.endsWith((String) enum.nextElement())) return true;
+       Enumeration enumeration = end_names.elements();
+       while(enumeration.hasMoreElements()){
+          if(host.endsWith((String) enumeration.nextElement())) return true;
        }
        return false;
     }
@@ -330,7 +330,7 @@ public class InetRange implements Cloneable{
       //check if it's ddd.ddd.ddd.ddd
       if(!Character.isDigit(host.charAt(0))) return -1;
 
-      int[] addr = ip2intarray(host); 
+      int[] addr = ip2intarray(host);
       if(addr == null) return -1;
 
       for(int i=0;i<addr.length;++i)
@@ -359,7 +359,7 @@ public class InetRange implements Cloneable{
 /*
 //* This was the test main function
 //**********************************
- 
+
     public static void main(String args[])throws UnknownHostException{
        int i;
 
